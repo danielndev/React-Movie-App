@@ -1,0 +1,196 @@
+*{
+  scroll-behavior: smooth;  
+}
+.App {
+  text-align: center;
+
+}
+
+.Navbar{
+  display: inline-flex;
+}
+
+.landing-page{
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.landing-page .title{
+  position: absolute;
+  text-align: left;
+  left: 50%;
+  top: 200px;
+  color: white;
+  animation: reveal 1s;
+}
+
+.landing-page h1{
+  font-size: 60px;
+}
+
+.landing-page h2{
+  margin-top: 10px;
+  font-size: 40px;
+}
+
+.iron-man{
+  position: absolute;
+  left: 100px;
+  top: 50px;
+  
+  height: 80vh;
+  animation: iron-reveal 1s;
+}
+
+@media only screen and (max-width: 800px) {
+  .iron-man{
+    height: 400px;
+    position: static;
+  }
+  .landing-page .title{
+    position: static;
+    text-align: center;
+  }
+  .landing-page h1{
+    font-size: 30px;
+  }
+  .landing-page h2{
+    font-size: 25px;
+  }
+}
+
+.background-circle{
+  border-radius: 100%;
+  position: absolute;
+}
+
+.circle1{
+  width: 300px;
+  height: 300px;
+  left: 200px;
+  top: 100px;
+  background-color: #F16273;
+  opacity: 15%;
+}
+
+.circle2{
+  width: 500px;
+  height: 500px;
+  left: 1000px;
+  top: 150px;
+  background-color: #F16273;
+  opacity: 15%;
+}
+
+.circle3{
+  width: 450px;
+  height: 450px;
+  left: 1200px;
+  top: 500px;
+  background-color: #C4C4C4;
+  opacity: 15%;
+}
+
+#Navbar{
+  animation: reveal 1s;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+#Navbar .buttons{
+  display: inline-flex;
+}
+
+#Navbar a{
+  text-decoration: none;
+}
+
+#Navbar h1{
+  color: white;
+  margin: 15px;
+  padding: 5px;
+  font-size: 20px;
+  border-radius: 10px;
+  transition: background-color 0.5s;
+  cursor: pointer;
+  
+}
+
+#Navbar h1:hover{
+  background-color: #092940;
+}
+
+
+.search-bar{
+  color: white;
+  padding-left: 10px;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  border: solid 1px white;
+  width: 30vw;
+  height: 20px;
+  border-radius: 2px;
+}
+
+.submit-search{
+  cursor: pointer;
+  font-size: large;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  border: none;
+}
+
+.submit-search:hover{
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#Movies-container{
+  margin: 10%;
+  margin-top: 0px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100vh;
+}
+
+.Genres{
+  display: inline-flex;
+}
+
+p {
+  color: white;
+}
+
+
+@keyframes iron-reveal{
+  from {
+    opacity: 0;
+    left: -100px;
+  }
+  to{
+    opacity: 1;
+    left: 100px;
+  }
+}
+
+@keyframes reveal{
+  from {
+    opacity: 0;
+   
+  }
+  to{
+    opacity: 1;
+    
+  }
+}
+
+
+
+
