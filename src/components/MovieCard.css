@@ -23,7 +23,7 @@
 .Movie-title{
     text-align: center;
     position: relative;
-
+    
     bottom: 100%;   
     width: 100%;
     z-index: 3;
@@ -60,7 +60,7 @@
     transition: color 0.5s;  
 }
 .MovieCard:hover{
-    border: solid 1px white;
+    
 }
 .MovieCard:hover .Movie-poster{
     position: relative;

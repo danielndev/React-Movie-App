@@ -1,4 +1,11 @@
 import React, {useState, useEffect} from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory
+} from "react-router-dom";
 import './App.css';
 import MovieCard from './components/MovieCard.js';
 import ironManPic from './resources/Iron_man.png';
@@ -29,22 +36,32 @@ const App = () => {
   const [movies, setMovies] = useState([]); 
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
-
+  let movieSearch = "";
+  const [chosenMovie, setChosenMovie] = useState({
+    title: "",
+    overview: "",
+    release_date: "",
+    backdrop_path: ""
+  });
+  
+ 
   useEffect(() => {
-    console.log("Search: " + search);
-    if(search === ""){
+    console.log("Search: " + query);
+    if(query === ""){
       //getData(tabs[0].API_URL);
     }else{
-      getData("https://api.themoviedb.org/3/search/movie?&api_key="+API_KEY+"&query="+search);
+      getData("https://api.themoviedb.org/3/search/movie?&api_key="+API_KEY+"&query="+query);
     }
   }, [query]);
 
   var changeSearch = e => {
-    setSearch(e.target.value);
+    movieSearch = e.target.value;
+   
+    //setSearch(e.target.value);
   }
 
   var submitSearch = () => {
-    setQuery(search);
+    setQuery(movieSearch);
   }
 
   async function getData(url){
@@ -82,40 +99,88 @@ const App = () => {
 
   const MoviePage = () => {
     return(
-      <h1>Working</h1>
+      <div className="App">
+        <LandingPage></LandingPage>
+        <div id="Navbar">
+          <div className="search-container">
+            <input className="search-bar" onChange={changeSearch} onSubmit={submitSearch} id="search-bar" placeholder="Search"></input>
+            <a href="#Navbar">    
+              <button className="submit-search" onClick={submitSearch}>▷</button>
+            </a>
+          </div>
+          <div className="buttons">
+            <a href="#Navbar">
+              <h1 onClick={()=>{getData(tabs[0].API_URL)}}>{tabs[0].heading}</h1>
+            </a>
+            <a href="#Navbar">  
+              <h1 onClick={()=>{getData(tabs[1].API_URL)}}>{tabs[1].heading}</h1>
+            </a>  
+          </div>
+        </div>
+        <div id="Movies-container">
+          {movies.map(movie => (
+            
+            <MovieCard 
+            key = {movie.id}
+            image = {movie.poster_path}
+            title = {movie.title}
+            description = {movie.overview}
+            release = {movie.release_date}
+            setMovie = {() => setCurrentMovie(movie)}
+            />
+            
+            ))}
+
+        </div>
+      </div>
     );
   }
+
+  let setCurrentMovie = (m) => {
+    setChosenMovie(m);
+    console.log(m.title);
+    
+  }
+
+  
+
+  const MovieInfo = (
+    {title,
+    backdrop,
+    overview,
+    release_date}
+  ) => {
+    console.log(backdrop)
+    return(
+      <div>
+        <img className="Movie-poster" src={"https://image.tmdb.org/t/p/w1280/" + backdrop} alt="" style={{width: "100%", position: "fixed", zIndex:"0"}}></img>
+        <div style={{width:"100%", height: "50%", backgroundColor: "rgba(0,0,20,0.9)", position:"absolute", top: "50%", color:"white"}}>
+          <Link to="/movie_app" style={{color:"white",textDecoration:"none"}}><h3 style={{margin: "20px", fontSize:"1rem"}}>Back</h3></Link>
+          <h1 style={{margin: "20px", fontSize:"2rem"}}>{title}</h1>
+          <p style={{margin: "20px", fontSize:"1rem"}}>{overview}</p>
+          <p style={{margin: "40px", fontSize:"1rem"}}>Release Date: {release_date}</p>
+          
+        </div>
+      </div>
+    )
+  }
   return (
-    <div className="App">
-      <LandingPage></LandingPage>
-      <div id="Navbar">
-        <div className="search-container">
-          <input className="search-bar" onChange={changeSearch} onSubmit={submitSearch} id="search-bar" placeholder="Search"></input>
-          <a href="#Navbar">    
-            <button className="submit-search" onClick={submitSearch}>▷</button>
-          </a>
-        </div>
-        <div className="buttons">
-          <a href="#Navbar">
-            <h1 onClick={()=>{getData(tabs[0].API_URL)}}>{tabs[0].heading}</h1>
-          </a>
-          <a href="#Navbar">  
-            <h1 onClick={()=>{getData(tabs[1].API_URL)}}>{tabs[1].heading}</h1>
-          </a>  
-        </div>
-      </div>
-      <div id="Movies-container">
-        {movies.map(movie => (
-          <MovieCard 
-          key = {movie.id}
-          image = {movie.poster_path}
-          title = {movie.title}
-          description = {movie.overview}
-          release = {movie.release_date}
+      <Router>
+      <Switch>
+        <Route exact path="/movie_app">
+          <MoviePage/>
+        </Route>
+        <Route path="/movie_app/info">
+          <MovieInfo
+            title = {chosenMovie.title}
+            backdrop = {chosenMovie.backdrop_path}
+            overview = {chosenMovie.overview}
+            release_date = {chosenMovie.release_date}
           />
-          ))}
-      </div>
-    </div>
+        </Route>   
+      </Switch>
+    </Router>
+      
   );
 }
 
